@@ -1,0 +1,316 @@
+game.StarterGui:SetCore("SendNotification", {
+    Title = 'noght demin guide';
+    Text = "press f9 for instruction n stuff";
+    Icon = "rbxassetid://2541869220";
+    Duration = 5;
+})
+print([[
+
+
+--- instruction ---
+R - demon slam 
+T - demon slashes
+Y - demon rage
+U - charger
+H - demon defeated
+J - demon stomp
+K - waken
+N - teleport anim with untransform sound cuz yes
+
+this script wasn't really made by me... credits to Brik's knight-walker script, all i did in here is just ton of keybind with sounds
+to make this script work then execute in lobby and buy the htf blade not vagrant
+i fixed the dash part since ingame it only make you dash for 1 time then you can't no more but now you can do it multiple times (even work in lobby)
+to change the dash's keybind then you should go line 16 and change it to your own liking
+well that's it bye
+
+]])
+--// Service
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+
+--// Variables
+local LocalPlayer = Players.LocalPlayer
+local distanceMultiplier = 18
+local DashCD = false
+--// Dash
+local localPlayer = Players.LocalPlayer
+local mouse = localPlayer:GetMouse()
+local DashCrap = UserInputService.InputEnded:Connect(function(input, gameproccessedevent)
+  if input.KeyCode == Enum.KeyCode.Space then
+      if gameproccessedevent then
+         return
+         end
+        if DashCD == true then
+            return
+        end
+DashCD = true
+
+        local animation = localPlayer.Character.Humanoid.Animator:LoadAnimation(game:GetService("ReplicatedStorage").animation_sets.ai_animations.knight.dash)
+        local direction = localPlayer.Character.PrimaryPart.CFrame.Position + Vector3.new(0, .5, 0)
+        local bodyPosition = Instance.new("BodyPosition")
+        bodyPosition.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        bodyPosition.P = 27500
+
+        if UserInputService:IsKeyDown(Enum.KeyCode.W) == true then direction -= localPlayer.Character.PrimaryPart.CFrame.ZVector * 18 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.A) == true then direction -= localPlayer.Character.PrimaryPart.CFrame.XVector * 18 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.S) == true then direction += localPlayer.Character.PrimaryPart.CFrame.ZVector * 18 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.D) == true then direction += localPlayer.Character.PrimaryPart.CFrame.XVector * 18 end
+
+        if UserInputService:IsKeyDown(Enum.KeyCode.W) == false and UserInputService:IsKeyDown(Enum.KeyCode.A) == false and UserInputService:IsKeyDown(Enum.KeyCode.S) == false and UserInputService:IsKeyDown(Enum.KeyCode.D) == false then direction += localPlayer.Character.PrimaryPart.CFrame.ZVector * 18 end
+        
+        bodyPosition.Position = direction
+        bodyPosition.Parent = localPlayer.Character.PrimaryPart
+        animation:Play()
+
+        task.wait(.2)
+        bodyPosition:Destroy()
+
+        task.wait(.5)
+        DashCD = false
+  end
+end)
+
+localPlayer.Character.Humanoid.Died:Connect(function()
+DashCrap:Disconnect()
+end)
+
+--// Extra Animation with Binds
+
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.R then 
+                      local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "abilities", [2] = "ndemon"
+        },
+        ["soundfile"] = "charge2"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.abilities.ndemon.charge2
+ye:clone().Parent = game:GetService("SoundService")
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].chargeslam)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+    ye:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.T then 
+               local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "abilities", [2] = "ndemon"
+        },
+        ["soundfile"] = "roar2"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.abilities. ndemon.roar2
+ye:clone().Parent = game:GetService("SoundService")
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].rageslashes)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+    ye:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.Y then 
+                            local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "abilities", [2] = "ndemon", [3] = "hurt"
+        },
+        ["soundfile"] = "damage3"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye2 = game:GetService("ReplicatedStorage").sound_library.abilities.ndemon.hurt.damage3
+ye2:clone().Parent = game:GetService("SoundService")
+ye2:Play()
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].rage)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+    wait(4.5)
+                        local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "abilities", [2] = "ndemon"
+        },
+        ["soundfile"] = "rage"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.abilities.ndemon.rage
+ye:clone().Parent = game:GetService("SoundService")
+ye:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.U then 
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].chargerush_ready)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.H then 
+                            local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "abilities", [2] = "ndemon"
+        },
+        ["soundfile"] = "defeat"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.abilities.ndemon.defeat
+ye:clone().Parent = game:GetService("SoundService")
+ye:Play()
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].defeat)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.J then 
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].stomp)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+    wait(1.3)
+                               local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "weapons", [2] = "glauncher"
+        },
+        ["soundfile"] = "explosion"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.weapons.glauncher.explosion
+ye:clone().Parent = game:GetService("SoundService")
+ye:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.K then 
+                                     local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "terrors",
+        },
+        ["soundfile"] = "transformed"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.terrors.transformed
+ye:clone().Parent = game:GetService("SoundService")
+ye:Play()
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].wake)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
+	if input.KeyCode == Enum.KeyCode.N then 
+                                             local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "terrors",
+        },
+        ["soundfile"] = "untransform"
+    }
+}
+
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.terrors.untransform
+ye:clone().Parent = game:GetService("SoundService")
+ye:Play()
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].teleport)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+	end
+end)
+--// Animations
+local animsets = ReplicatedStorage.animation_sets
+local into = ReplicatedStorage.animation_sets.ai_animations
+animsets["sword"].swing1.AnimationId = into["nd"].attack1.AnimationId
+animsets["sword"].swing2.AnimationId = into["nd"].attack2.AnimationId
+animsets["sword"].equip.AnimationId = into["nd"].idle.AnimationId
+animsets["sword"].sprint.AnimationId = into["nd"].anger.AnimationId
+animsets["sword"].block1.AnimationId = into["nd"].guard.AnimationId
+animsets["sword"].block2.AnimationId = into["nd"].guard.AnimationId
+
+--// Functions
+game.Workspace.mainGame.active_humans.ChildAdded:Connect(function(instance)
+    task.wait(1)
+    if instance.Name == LocalPlayer.Name then
+dash_cd = false
+game:GetService("ReplicatedStorage").sound_library.terrors.music.demon:Play()
+	end
+end)
+
+game.Workspace.mainGame.active_humans.ChildRemoved:Connect(function(instance)
+    task.wait(1)
+    if instance.Name == LocalPlayer.Name then
+dash_cd = true
+	end
+end)
