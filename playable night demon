@@ -6,7 +6,7 @@ game.StarterGui:SetCore("SendNotification", {
 })
 print([[
 
-
+use this with caution because everyone sees your animation and sound..
 --- instruction ---
 R - demon slam 
 T - demon slashes
@@ -20,7 +20,6 @@ N - teleport anim with untransform sound cuz yes
 this script wasn't really made by me... credits to Brik's knight-walker script, all i did in here is just ton of keybind with sounds
 to make this script work then execute in lobby and buy the htf blade not vagrant
 i fixed the dash part since ingame it only make you dash for 1 time then you can't no more but now you can do it multiple times (even work in lobby)
-to change the dash's keybind then you should go line 16 and change it to your own liking
 well that's it bye
 
 ]])
