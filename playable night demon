@@ -218,7 +218,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
 	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.ai_animations["nd"].stomp)
     playerAnimation.Priority = Enum.AnimationPriority.Action
     playerAnimation:Play()
-    wait(1.3)
+    wait(1)
                                local args = {
     [1] = {
         ["location"] = game:GetService("SoundService"),
