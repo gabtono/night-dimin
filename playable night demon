@@ -18,6 +18,7 @@ J - demon stomp
 K - appears
 N - disappears
 M - crouch
+[ (left bracket) - alternate demon attack
 (the results is nothing, all of this just for fun)
 this script wasn't really made by me... credits to Brik's knight-walker script, all i did in here is just ton of keybind with sounds
 to make this script work then execute in lobby and buy the htf blade not vagrant
@@ -292,6 +293,45 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         return
     end
 
+	if input.KeyCode == Enum.KeyCode.LeftBracket then 
+                                             local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "terrors", [2] = "demon"
+        },
+        ["soundfile"] = "swing"
+    }
+}
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye = game:GetService("ReplicatedStorage").sound_library.terrors.demon.swing
+ye:clone().Parent = game:GetService("SoundService")
+ye:Play()
+	local playerAnimation = LocalPlayer.Character.Humanoid.Animator:LoadAnimation(game.ReplicatedStorage.animation_sets.terror["demon"].attack)
+    playerAnimation.Priority = Enum.AnimationPriority.Action
+    playerAnimation:Play()
+                                                local args = {
+    [1] = {
+        ["location"] = game:GetService("SoundService"),
+        ["directory"] = {
+            [1] = "terrors", [2] = "demon"
+        },
+        ["soundfile"] = "attack2"
+    }
+}
+workspace.mainGame.remotes.audio_relay:FireServer(unpack(args))
+
+local ye2 = game:GetService("ReplicatedStorage").sound_library.terrors.demon.attack2
+ye2:clone().Parent = game:GetService("SoundService")
+ye2:Play()
+	end
+end)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent == true then
+        return
+    end
+
 	if input.KeyCode == Enum.KeyCode.H then 
                             local args = {
     [1] = {
@@ -439,7 +479,6 @@ animsets["sword"].equip.AnimationId = into["nd"].idle.AnimationId
 animsets["sword"].sprint.AnimationId = into["nd"].anger.AnimationId
 animsets["sword"].block1.AnimationId = into["nd"].guard.AnimationId
 animsets["sword"].block2.AnimationId = into["nd"].guard.AnimationId
-
 
 --// Functions
 game.Workspace.mainGame.active_humans.ChildAdded:Connect(function(instance)
